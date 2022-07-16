@@ -3,15 +3,14 @@ package br.com.chocolight.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 
 import lombok.Data;
@@ -33,15 +32,23 @@ public class Product implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String name;
 	
-	@Column(nullable = false, length = 50)
+	@Column(nullable = false, length = 50, scale = 2)
 	private BigDecimal price;
 	
 	@Column(length = 255)
 	private String description;
 	
-	@ManyToOne(fetch = FetchType.EAGER,  cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "ID", insertable = false, updatable = false, nullable = true)
-//	@NotFound(action = NotFoundAction.IGNORE)
+	@Column(nullable = false, length = 500)
+	private String urlImage;
+	
+	@Column(nullable = false, length = 50)
+	private String brand;
+	
+	@Column(nullable = false, length = 50)
+	private String weight;
+	
+	@PrimaryKeyJoinColumn(name = "idCategory", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
 	private Category category;
 	
 }
